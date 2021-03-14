@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 require('firebase/auth')
 require('firebase/firestore')
 require('firebase/database')
+require('firebase/storage')
 
 var config = {
     apiKey: "AIzaSyCNtlvE4ekGQ2sYC8Th7hFr1QS6q-Jflnw",

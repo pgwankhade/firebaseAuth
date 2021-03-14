@@ -2,10 +2,10 @@ import {authtype} from '../actiontype/Authtype'
 import {auth} from '../../Fire'
 import firebase from "../../Fire";
 
- const database = firebase.firestore()
-
- const databaseRef = firebase.database().ref();
+const database = firebase.firestore()
+const databaseRef = firebase.database().ref();
 const userDetailsRef = databaseRef.child("user-details");
+const storage = firebase.storage()
 
 export const registeruser = ({firstname,lastname,age,mobile,email,password,image}) => async dispatch => {
 

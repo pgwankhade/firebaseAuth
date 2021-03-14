@@ -1,10 +1,11 @@
 import {registeruser} from '../redux/Actions/Action'
-import {useDispatch} from 'react-redux'
-import { Link } from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 const Register =()=>{
     const dispatch = useDispatch()
+    const select = useSelector(state=>state.registration.loggedIn)
     const initialFieldValues = {
         FirstName: '',
         LastName:'',
@@ -27,7 +28,7 @@ const Register =()=>{
         e.preventDefault()
         dispatch(registeruser(values))
     }
-    return(
+    return(select?<Redirect to="/" />:
         <div style={{display:"flex", justifyContent:"center", marginTop:"0.1rem"}}>
         <Card style={{width: '30rem', padding:"2rem"}}>
         <form>
@@ -50,7 +51,12 @@ const Register =()=>{
 
                 <div className="form-group">
                     <label>Mobile/Phone no</label>
-                    <input type="number" className="form-control" placeholder="Mobile/Phone no." name="mobile" value={values.mobile} onChange={handleInputChange}/>
+                    <input type="text" className="form-control" placeholder="Mobile/Phone no." name="mobile" value={values.mobile} onChange={handleInputChange}/>
+                </div>
+
+                <div className="form-group">
+                    <label>Address</label>
+                    <input type="text" className="form-control" placeholder="Address" name="address" value={values.address} onChange={handleInputChange}/>
                 </div>
                 
                 <div className="form-group">

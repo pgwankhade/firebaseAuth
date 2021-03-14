@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 const SignIn =()=>{
     const dispatch = useDispatch()
     const select = useSelector(state=>state.registration.loggedIn)
-    const history = useHistory()
     const initialFieldValues = {
         email: '',
         password:''
@@ -25,6 +24,7 @@ const SignIn =()=>{
     }
 
     return(
+        select? <Redirect to="/"/>:
         <div style={{display:"flex", justifyContent:"center", marginTop:"10rem"}}>
         <Card style={{width: '30rem', padding:"2rem"}}>
         <form>

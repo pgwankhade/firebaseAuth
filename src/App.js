@@ -14,7 +14,7 @@ function App() {
       <Route
         {...rest}
         render={(props) => {
-          return true ? <Component {...props} /> : <Redirect to="/login" />
+          return select ? <Component {...props} /> : <Redirect to="/login" />
         }}
       />
     );
