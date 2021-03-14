@@ -7,8 +7,8 @@ const Register =()=>{
     const dispatch = useDispatch()
     const select = useSelector(state=>state.registration.loggedIn)
     const initialFieldValues = {
-        FirstName: '',
-        LastName:'',
+        firstname: '',
+        lastname:'',
         age:'',
         mobile: '',
         email: '',
@@ -36,12 +36,12 @@ const Register =()=>{
 
                 <div className="form-group">
                     <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" name="FirstName" value={values.FirstName} onChange={handleInputChange}/>
+                    <input type="text" className="form-control" placeholder="First name" name="firstname" value={values.firstname} onChange={handleInputChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" name="LastName" value={values.LastName} onChange={handleInputChange}/>
+                    <input type="text" className="form-control" placeholder="Last name" name="lastname" value={values.lastname} onChange={handleInputChange}/>
                 </div>
 
                 <div className="form-group">
