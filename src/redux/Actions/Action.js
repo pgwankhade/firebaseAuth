@@ -1,7 +1,6 @@
 import { authtype } from '../actiontype/Authtype'
 import { auth } from '../../Fire'
 import firebase from "../../Fire";
-
 const database = firebase.firestore()
 const databaseRef = firebase.database().ref();
 const userDetailsRef = databaseRef.child("user-details");
@@ -14,8 +13,8 @@ export const registeruser = ({ firstname, lastname, age, mobile, email, password
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(function (user) {
-      //  database.collection("user").doc().set({ userId: user.user.uid, firstname:"priyanka"})
-      userDetailsRef.push().set({ userId: user.user.uid, firstname: firstname, lastname:lastname, age:age, address: address });
+      database.collection("user").doc().set({ userId: user.user.uid, firstname: firstname, lastname:lastname, age:age, address: address, mobile:mobile})
+      // userDetailsRef.push().set({ userId: user.user.uid, firstname: firstname, lastname:lastname, age:age, address: address });
       const uploadTask = storage.ref(`/images/${image}`).put(image);
       uploadTask.on("state_changed", console.log, console.error, () => {
         storage

@@ -2,28 +2,59 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
 import Button from 'react-bootstrap/Button';
+import {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import firebase from '../Fire'
 const ProfilePage = () => {
     const select = useSelector(state => state.registration.loggedIn)
-    // const database = firebase.firestore().collection('user')
-    const databaseRef = firebase.database().ref();
-    const statCardsRef = databaseRef.child("user-details");
-    statCardsRef.on("value", snapshot => {
-        console.log(snapshot.val())
-    })
-    return (
+    const userid = useSelector(state => state.registration.useruid)
+     const database = firebase.firestore().collection('user')
+    const [data , setData] = useState(null)
+    useEffect(()=>{
+        database
+        .get()
+        .then(userdata=>{
+            userdata.forEach((user)=>{
+                let data = user.data()
+                if(data.userId===userid){
+                    console.log("data1",data)
+                    setData(data)
+                }
+            })
+        })
+    },[userid])
+    console.log("data", data)
+    return ( data?
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "10rem" }}>
             <Card style={{ width: '18rem' }} >
                 <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
                 <Card.Body>
-                    <Card.Title>Name</Card.Title>
+                    <Card.Title>Name : {data.firstname} {data.lastname}</Card.Title>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                    <ListGroupItem>Age:</ListGroupItem>
-                    <ListGroupItem>Mobile No.</ListGroupItem>
-                    <ListGroupItem>Address</ListGroupItem>
+                    <ListGroupItem>Age : {data.age}</ListGroupItem>
+                    <ListGroupItem>Mobile No. : {data.mobile}</ListGroupItem>
+                    <ListGroupItem>Address : {data.address}</ListGroupItem>
+                </ListGroup>
+            </Card>
+            <Card style={{ width: '18rem' }} >
+                <Link to="/editpage" >
+                    <Button variant="info" style={{ width: '18rem' }}>Edit My Profile</Button>
+                </Link>
+            </Card>
+        </div>
+        :
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "10rem" }}>
+            <Card style={{ width: '18rem' }} >
+                <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                <Card.Body>
+                    <Card.Title>Name : </Card.Title>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                    <ListGroupItem>Age : </ListGroupItem>
+                    <ListGroupItem>Mobile No. : </ListGroupItem>
+                    <ListGroupItem>Address : </ListGroupItem>
                 </ListGroup>
             </Card>
             <Card style={{ width: '18rem' }} >
