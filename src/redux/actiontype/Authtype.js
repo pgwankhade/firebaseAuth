@@ -1,0 +1,5 @@
+export  const authtype = {
+    LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
+    REGISTER_SUCCESS: 'USER_REGISTER_SUCCESS',
+  };
+  
