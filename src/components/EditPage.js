@@ -110,9 +110,6 @@ const EditPage =()=>{
                 </div>
 
                 <button type="submit" className="btn btn-dark btn-lg btn-block" onClick={handleclick}>Save</button>
-                <p className="forgot-password text-right">
-                        goto <Link to="/login"> <a href="#">log in</a> </Link>
-                </p>
             </form>
 
         </Card>

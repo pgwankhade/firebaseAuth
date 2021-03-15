@@ -13,6 +13,7 @@ export const registeruser = ({ firstname, lastname, age, mobile, email, password
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(function (user) {
+      // database.collection("user").doc().set({ userId: user.user.uid, firstname: firstname, lastname:lastname, age:age, address: address, mobile:mobile})
       const uploadTask = storage.ref(`/images/${image.name}`).put(image);
       uploadTask.on("state_changed", console.log, console.error, () => {
         storage

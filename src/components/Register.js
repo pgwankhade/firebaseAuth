@@ -45,7 +45,7 @@ const Register = () => {
     }
     return (loginpage?<Redirect to="/login"/>:
         <div style={{ display: "flex", justifyContent: "center", marginTop: "0.1rem" }}>
-            <Card style={{ width: '30rem', padding: "2rem" }}>
+            <Card style={{ width: '30rem', padding: "1rem" }}>
                 <form>
                     <h3>Register</h3>
 
