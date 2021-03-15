@@ -18,6 +18,16 @@ export const registration = (state = {}, action) => {
         ...state,
         useruid: payload
       }
+    case "KEY_VALUE":
+      return {
+        ...state,
+        keyvalue: payload
+      }
+    case "GOTO_LOGIN":
+      return {
+        ...state,
+        gotologin: payload
+      }
 
     default:
       return state;

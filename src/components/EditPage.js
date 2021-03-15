@@ -1,20 +1,26 @@
 import Card from 'react-bootstrap/Card';
 import {useState, useEffect} from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { Redirect, Link } from 'react-router-dom'
 import firebase from '../Fire'
 
 const EditPage =()=>{
+    const key = useSelector(state => state.registration.keyvalue)
     const userid = useSelector(state => state.registration.useruid)
+    const loginpage = useSelector(state => state.registration.gotologin)
     const database = firebase.firestore().collection('user')
+    const storage = firebase.storage()
+    const dispatch = useDispatch()
     const initialFieldValues = {
         firstname: '',
         lastname:'',
         age:'',
         mobile: '',
-        address: '',
+        address: ''
     }
 
     var [values, setValues] = useState(initialFieldValues)
+    const [image, setImage] = useState(null)
     const handleInputChange = e => {
         var { name, value } = e.target;
         setValues({
@@ -22,21 +28,50 @@ const EditPage =()=>{
             [name]: value
         })
     }
-    
+    var [values, setValues] = useState(initialFieldValues)
+
+    const handleFileChange = e => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0])
+        }
+    }
+  
     const handleclick=(e)=>{
         e.preventDefault()
+        if(image){
         database
         .get()
         .then(userdata=>{
             userdata.forEach((user)=>{
-                let data = user.data()
-                if(data.userId===userid){
-                    database.collection("user").doc().set({ userId: userid, firstname: values.firstname, lastname:values.lastname, age:values.age, address: values.address, mobile:values.mobile})
+                if(user.id===key){
+                    const uploadTask = storage.ref(`/images/${image.name}`).put(values.image);
+                    uploadTask.on("state_changed", console.log, console.error, () => {
+                      storage
+                        .ref("images")
+                        .child(image.name)
+                        .getDownloadURL()
+                        .then((url) => {
+                          console.log("url",url)
+                          database.doc(key).set({ userId:userid, firstname: values.firstname, lastname:values.lastname, age:values.age, address: values.address, mobile:values.mobile, image:url})
+                        });
+                    });
                 }
             })
+            alert("login to see changes")
+            dispatch({type:"GOTO_LOGIN", payload:true})
         })
-
-        console.log("values",values)
+    }else{
+        database
+        .get()
+        .then(userdata=>{
+            userdata.forEach((user)=>{
+                if(user.id===key){
+                    database.doc(key).set({ userId:userid, firstname: values.firstname, lastname:values.lastname, age:values.age, address: values.address, mobile:values.mobile})
+                }
+            })
+            alert("login to see changes")
+        })
+    }
     }
     return(
         <div style={{display:"flex", justifyContent:"center", marginTop:"0.1rem"}}>
@@ -71,10 +106,13 @@ const EditPage =()=>{
         
                 <div className="form-group">
                     <label>Profile Image</label>
-                    <input type="file" id="img" name="img" accept="image/*"/>
+                    <input type="file" id="img" name="img" accept="image/*" onChange={handleFileChange}/>
                 </div>
 
                 <button type="submit" className="btn btn-dark btn-lg btn-block" onClick={handleclick}>Save</button>
+                <p className="forgot-password text-right">
+                        goto <Link to="/login"> <a href="#">log in</a> </Link>
+                </p>
             </form>
 
         </Card>
