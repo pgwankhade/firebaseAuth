@@ -19,15 +19,13 @@ const ProfilePage = () => {
             userdata.forEach((user)=>{
                 let data = user.data()
                 if(data.userId===userid){
-                    console.log("data1",data)
                     dispatch({type:"KEY_VALUE", payload:user.id})
+                    dispatch({type:"PROFILE_DATA", payload:data})
                     setData(data)
-                    console.log(user.id)
                 }
             })
         })
     },[userid])
-    console.log("data", data)
 
     return ( data?
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "10rem" }}>

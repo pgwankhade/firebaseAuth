@@ -8,15 +8,17 @@ const EditPage =()=>{
     const key = useSelector(state => state.registration.keyvalue)
     const userid = useSelector(state => state.registration.useruid)
     const loginpage = useSelector(state => state.registration.gotologin)
+    const profiledata = useSelector(state => state.registration.profiledata)
+    console.log("profile",profiledata)
     const database = firebase.firestore().collection('user')
     const storage = firebase.storage()
     const dispatch = useDispatch()
     const initialFieldValues = {
-        firstname: '',
-        lastname:'',
-        age:'',
-        mobile: '',
-        address: ''
+        firstname: profiledata.firstname,
+        lastname: profiledata.lastname,
+        age: profiledata.age,
+        mobile: profiledata.mobile,
+        address: profiledata.address
     }
 
     var [values, setValues] = useState(initialFieldValues)
@@ -74,7 +76,7 @@ const EditPage =()=>{
     }
     }
     return(
-        <div style={{display:"flex", justifyContent:"center", marginTop:"0.1rem"}}>
+        <div style={{display:"flex", justifyContent:"center",  marginTop:"2rem"}}>
         <Card style={{width: '30rem', padding:"2rem"}}>
         <form>
                 <h3>Edit My Info</h3>

@@ -28,6 +28,11 @@ export const registration = (state = {}, action) => {
         ...state,
         gotologin: payload
       }
+    case "PROFILE_DATA":
+      return {
+        ...state,
+        profiledata: payload
+      }
 
     default:
       return state;
